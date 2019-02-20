@@ -2,7 +2,9 @@ package com.andDigital.services;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +20,7 @@ import com.andDigital.entity.Phones;
 public class Services implements Serializable, Iservices
 {
 	private static final long serialVersionUID = 1L;
+	private List<Customer> listCustomer = new ArrayList<Customer>();
 
 	@GET
 	@Path("/getAll")
@@ -25,8 +28,6 @@ public class Services implements Serializable, Iservices
 	@Override
 	public Response getAllPhones()
 	{
-		List<Customer> listCustomer = new ArrayList<Customer>();
-
 		listCustomer = this.createObject();
 
 		return(Response.status(Response.Status.OK).entity(listCustomer).build());
@@ -38,8 +39,6 @@ public class Services implements Serializable, Iservices
 	@Override
 	public Response getPhoneById(@PathParam("id") int id)
 	{
-		List<Customer> listCustomer = new ArrayList<Customer>();
-
 		listCustomer = this.createObject();
 		
 		Customer data = listCustomer.stream()
@@ -49,7 +48,10 @@ public class Services implements Serializable, Iservices
 
 		if (data == null)
 		{
-			return(Response.status(Response.Status.BAD_REQUEST).entity("Error: Customer not found.").build());
+			Map<String, String> mapError = new HashMap<String, String>();
+			mapError.put("Error: ", "Customer not found!");
+
+			return(Response.status(Response.Status.BAD_REQUEST).entity(mapError).build());
 		}
 		
 		return(Response.status(Response.Status.OK).entity(data).build());
@@ -58,8 +60,6 @@ public class Services implements Serializable, Iservices
 	@Override
 	public List<Customer> createObject()
 	{
-		List<Customer> listCustomer = new ArrayList<Customer>();
-
 		/*Customer 1*/
 		Customer customer = new Customer();
 

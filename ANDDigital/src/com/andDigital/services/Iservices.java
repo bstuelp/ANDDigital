@@ -14,4 +14,6 @@ public interface Iservices
 	public List<Customer> createObject();
 
 	public Response getPhoneById(@PathParam("id") int id);
+
+	public Response activatedNumber(String number);
 }

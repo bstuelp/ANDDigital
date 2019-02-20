@@ -14,14 +14,6 @@ public class Phones
 		return phone;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public boolean isActivated() {
-		return activated;
-	}
-
 	public void setActivated(boolean activated) {
 		this.activated = activated;
 	}

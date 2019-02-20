@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,6 +30,29 @@ public class Services implements Serializable, Iservices
 		listCustomer = this.createObject();
 
 		return(Response.status(Response.Status.OK).entity(listCustomer).build());
+	}
+
+	@GET
+	@Path("/getPhone/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getPhoneById(@PathParam("id") int id)
+	{
+		List<Customer> listCustomer = new ArrayList<Customer>();
+
+		listCustomer = this.createObject();
+		
+		Customer data = listCustomer.stream()
+				  .filter(customer -> id == customer.getId())
+				  .findAny()
+				  .orElse(null);
+
+		if (data == null)
+		{
+			return(Response.status(Response.Status.BAD_REQUEST).entity("Error: Customer not found.").build());
+		}
+		
+		return(Response.status(Response.Status.OK).entity(data).build());
 	}
 
 	@Override
